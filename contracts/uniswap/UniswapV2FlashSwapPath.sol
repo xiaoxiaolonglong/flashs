@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8;
-import "./interface/IUniswapV2.sol";
-import "./interface/IERC20.sol";
+import "../interface/uniswap/IUniswapV2.sol";
+import "../interface/IERC20.sol";
 import "hardhat/console.sol";
 
 contract UniswapV2FlashSwapPath is IUniswapV2Callee {

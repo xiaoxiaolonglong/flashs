@@ -2,7 +2,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { ContractReceipt } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat"
-import { bsc8Address, usdcAddress } from "./config";
+import { bsc8Address, usdcAddress } from "../config/address";
 
 const { expect } = require("chai");
 

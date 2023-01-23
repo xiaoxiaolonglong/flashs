@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8;
-import "./interface/IUniswapV2.sol";
-import "./interface/IERC20.sol";
+import "../interface/uniswap/IUniswapV2.sol";
+import "../interface/IERC20.sol";
 import "hardhat/console.sol";
 
 contract UniswapV2FlashSwap is IUniswapV2Callee {
@@ -49,10 +49,10 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         (address tokenBorrow, uint amount) = abi.decode(_data, (address, uint));
         // contract > account => contract
         {
-            uint balance = IERC20(usdc).balanceOf(address(this));
             console.log("contract tl", IERC20(usdc).balanceOf(address(this)));
             console.log("account tl", IERC20(usdc).balanceOf(account));
 
+            uint balance = IERC20(usdc).balanceOf(address(this));
             IERC20(usdc).transfer(account, balance);
             console.log("contract tl", IERC20(usdc).balanceOf(address(this)));
             console.log("account tl", IERC20(usdc).balanceOf(account));

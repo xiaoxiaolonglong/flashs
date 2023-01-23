@@ -1,12 +1,14 @@
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-const usdcAddress = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-const bsc8Address = "0xf977814e90da44bfa03b6295a0616a897441acec"
+import { bsc8Address, usdcAddress } from "../config/address";
+
+
 
 async function main() {
 	const UniswapV2FlashSwap = await ethers.getContractFactory("UniswapV2FlashSwap");
 	const uniswapV2FlashSwap = await UniswapV2FlashSwap.deploy();
 	const uni = await uniswapV2FlashSwap.deployed();
+    
 	const [ signer ] = await ethers.getSigners();
 
 	const bsc8 = await ethers.getImpersonatedSigner(bsc8Address);
