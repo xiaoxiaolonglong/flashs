@@ -10,8 +10,9 @@ const config: HardhatUserConfig = {
 	networks: {
 		hardhat: {
 			forking: {
-				url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
+				// url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
                 // url: `https://bsc-mainnet.nodereal.io/v1/${process.env.NODEREAL_BSCMAIN_KEY}`,
+                url:"https://endpoints.omniatech.io/v1/bsc/mainnet/public"
                 // blockNumber: 22337426
 			}
 		}
