@@ -8,8 +8,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
     // Uniswap V2 router
     address private constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
     // Uniswap V2 factory
-    address private constant FACTORY =
-        0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
+    address private constant FACTORY = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
     address usdc = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
     address account = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
     event Log(

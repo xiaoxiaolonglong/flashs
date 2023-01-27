@@ -6,10 +6,13 @@ dotenv();
 import "@nomicfoundation/hardhat-toolbox";
 
 const config: HardhatUserConfig = {
+    defaultNetwork:"hardhat",
 	networks: {
 		hardhat: {
 			forking: {
 				url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
+                // url: `https://bsc-mainnet.nodereal.io/v1/${process.env.NODEREAL_BSCMAIN_KEY}`,
+                // blockNumber: 22337426
 			}
 		}
 	},
