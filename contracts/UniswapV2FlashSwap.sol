@@ -21,6 +21,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
 
     function flashSwap(address _tokenBorrow, uint _amount) external {
         console.log("contract before", IERC20(usdc).balanceOf(address(this)));
+        // 通过交易对获取合约
         address pair = IUniswapV2Factory(FACTORY).getPair(_tokenBorrow, WETH);
         require(pair != address(0), "no pair !");
         address token0 = IUniswapV2Pair(pair).token0();
@@ -28,10 +29,13 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         uint amount0Out = _tokenBorrow == token0 ? _amount : 0;
         uint amount1Out = _tokenBorrow == token1 ? _amount : 0;
         bytes memory data = abi.encode(_tokenBorrow, _amount);
+        console.log(_tokenBorrow, amount0Out, amount1Out);
+        // 将要借出的币和金额进行编码传入swap，借出的钱借到了当前合约
         IUniswapV2Pair(pair).swap(amount0Out, amount1Out, address(this), data);
     }
 
     // called by pair contract
+    // uniswapPair的合约swap，会自动调用该方法
     function uniswapV2Call(
         address _sender,
         uint _amount0,
@@ -40,6 +44,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
     ) external override {
         address token0 = IUniswapV2Pair(msg.sender).token0();
         address token1 = IUniswapV2Pair(msg.sender).token1();
+        // 通过交易对获取合约
         address pair = IUniswapV2Factory(FACTORY).getPair(token0, token1);
 
         require(msg.sender == pair, "no pair !");
@@ -48,6 +53,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         (address tokenBorrow, uint amount) = abi.decode(_data, (address, uint));
         // contract > account => contract
         {
+            // 获取到借出的币后进行操作，模拟转账操作
             console.log("contract tl", IERC20(usdc).balanceOf(address(this)));
             console.log("account tl", IERC20(usdc).balanceOf(account));
 
@@ -64,7 +70,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         uint fee = ((amount * 3) / 997) + 1;
         uint amountToRepay = amount + fee;
         emit Log(amount, _amount0, _amount1, fee, amountToRepay);
-
+        // 把借出的钱还给合约
         IERC20(tokenBorrow).transfer(pair, amountToRepay);
         console.log("contract after", IERC20(usdc).balanceOf(address(this)));
     }
