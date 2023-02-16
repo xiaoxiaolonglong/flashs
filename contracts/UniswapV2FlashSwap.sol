@@ -26,6 +26,7 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         require(pair != address(0), "no pair !");
         address token0 = IUniswapV2Pair(pair).token0();
         address token1 = IUniswapV2Pair(pair).token1();
+        // 借出的是传入的代币，另一个代币为0
         uint amount0Out = _tokenBorrow == token0 ? _amount : 0;
         uint amount1Out = _tokenBorrow == token1 ? _amount : 0;
         bytes memory data = abi.encode(_tokenBorrow, _amount);
@@ -42,11 +43,14 @@ contract UniswapV2FlashSwap is IUniswapV2Callee {
         uint _amount1,
         bytes calldata _data
     ) external override {
+        //  msg.sender，它指的是当前调用者（或智能合约）的 address
+        // 这里是pair的回调函数，所以msg.sender指的是pair合约
         address token0 = IUniswapV2Pair(msg.sender).token0();
         address token1 = IUniswapV2Pair(msg.sender).token1();
         // 通过交易对获取合约
         address pair = IUniswapV2Factory(FACTORY).getPair(token0, token1);
 
+        // require，不满足条件会抛出错误
         require(msg.sender == pair, "no pair !");
         require(_sender == address(this), "!sender");
 
